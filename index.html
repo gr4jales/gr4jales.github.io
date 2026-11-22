@@ -89,8 +89,8 @@
 </main>
 
 <script>
-// Endpoint de Apps Script (Fase 3). Mientras esté vacío, los eventos solo salen en la consola.
-const ENDPOINT = "";
+// Endpoint de Apps Script (Fase 3). Si se deja vacío, los eventos solo salen en la consola.
+const ENDPOINT = "https://script.google.com/macros/s/AKfycbyPkdgAtsviKoRzdgWH-fvRlQ6RMV2QcxOKjqK4yz3qOhVHwvmkuCKzTDfuS9afng-5/exec";
 
 (function () {
   const params = new URLSearchParams(location.search);
@@ -101,6 +101,12 @@ const ENDPOINT = "";
   const video = document.getElementById("v");
   const sid = Array.from(crypto.getRandomValues(new Uint8Array(8)),
                          b => b.toString(16).padStart(2, "0")).join("");
+  // Navegador resumido (tipo de equipo + navegador), sin datos personales.
+  const ua = navigator.userAgent;
+  const nav = (/Mobi|Android|iPhone|iPad/.test(ua) ? "movil" : "escritorio") + " / " +
+    (/Edg\//.test(ua) ? "Edge" : /CriOS|Chrome\//.test(ua) ? "Chrome" : /FxiOS|Firefox\//.test(ua) ? "Firefox" :
+     /Safari\//.test(ua) ? "Safari" : "otro") + " / " +
+    (/iPhone|iPad|Mac OS/.test(ua) ? "Apple" : /Android/.test(ua) ? "Android" : /Windows/.test(ua) ? "Windows" : "otro");
   let maxPct = 0;
   let timer = null;
   let closed = false;
@@ -117,6 +123,7 @@ const ENDPOINT = "";
       t: Math.round(video.currentTime || 0),
       dur: Math.round(video.duration || 0),
       max_pct: maxPct,
+      nav: nav,
       ts: new Date().toISOString()
     };
     if (!ENDPOINT) { console.log("[tracking]", data); return; }
