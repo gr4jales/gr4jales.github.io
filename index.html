@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:,">
+<title>Juan Fernando Grajales Robledo | GK | Class of 2027</title>
+<meta name="description" content="Highlights and profile of Juan Fernando Grajales Robledo, goalkeeper, Class of 2027, Cali, Colombia.">
+<style>
+  :root {
+    --bg: #ffffff; --fg: #14171a; --muted: #5b6470; --line: #e3e6ea;
+    --card: #f6f7f9; --accent: #0b5cad; --accent-fg: #ffffff;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #0f1215; --fg: #eef1f4; --muted: #a2abb5; --line: #262c33;
+            --card: #171b20; --accent: #4c9be8; --accent-fg: #0f1215; }
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--bg); color: var(--fg);
+         font: 16px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+  .video { background: #000; }
+  video { display: block; width: 100%; max-height: 80vh; background: #000; }
+  main { max-width: 720px; margin: 0 auto; padding: 20px 16px 40px; }
+  h1 { font-size: 1.5rem; line-height: 1.2; margin: 0 0 4px; }
+  .sub { color: var(--muted); margin: 0 0 18px; }
+  .cta { display: block; text-align: center; background: var(--accent); color: var(--accent-fg);
+         text-decoration: none; font-weight: 600; padding: 14px 16px; border-radius: 10px; margin: 0 0 8px; }
+  .mail { text-align: center; margin: 0 0 24px; color: var(--muted); font-size: .95rem;
+          overflow-wrap: anywhere; user-select: all; -webkit-user-select: all; }
+  h2 { font-size: 0.8rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted);
+       margin: 28px 0 10px; }
+  dl { margin: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  dl div { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; }
+  dt { font-size: .8rem; color: var(--muted); }
+  dd { margin: 2px 0 0; font-weight: 600; }
+  ul { margin: 0; padding-left: 20px; }
+  li { margin: 6px 0; }
+  .links a { color: var(--accent); }
+  footer { color: var(--muted); font-size: .85rem; margin-top: 32px; }
+  @media (min-width: 640px) { dl { grid-template-columns: repeat(3, 1fr); } h1 { font-size: 1.9rem; } }
+</style>
+</head>
+<body>
+<div class="video">
+  <video id="v" src="video_highlights.mp4" controls playsinline preload="metadata"></video>
+</div>
+<main>
+  <h1>Juan Fernando Grajales Robledo</h1>
+  <p class="sub">Class of 2027 · Goalkeeper (Sweeper Keeper) · Cali, Colombia</p>
+
+  <a class="cta" id="email" href="mailto:juanfernandograjalesrobledo@gmail.com">Email me</a>
+  <p class="mail">juanfernandograjalesrobledo@gmail.com</p>
+
+  <h2>Player</h2>
+  <dl>
+    <div><dt>Height</dt><dd>6'0" (183 cm)</dd></div>
+    <div><dt>Weight</dt><dd>154 lbs</dd></div>
+    <div><dt>Dominant foot</dt><dd>Right</dd></div>
+    <div><dt>Club</dt><dd>C.D. Pedro Sellares</dd></div>
+    <div><dt>Competition</dt><dd>DIFUTBOL National U-17</dd></div>
+    <div><dt>Graduation</dt><dd>Class of 2027</dd></div>
+  </dl>
+
+  <h2>Academics</h2>
+  <dl>
+    <div><dt>GPA</dt><dd>4.2 (Colombian scale)</dd></div>
+    <div><dt>English</dt><dd>C1 (IELTS)</dd></div>
+    <div><dt>College start</dt><dd>Fall 2027</dd></div>
+  </dl>
+  <p>Intended majors: Sports Medicine, Sports Management, Sports Science.</p>
+
+  <h2>Achievements</h2>
+  <ul>
+    <li>562 consecutive minutes without conceding a goal (regional record)</li>
+    <li>MVP</li>
+    <li>Called up to the Cali and Valle del Cauca regional teams</li>
+    <li>SuperLiga Cali champion</li>
+    <li>Attended the Ohio State Elite Goalkeeper ID Camp</li>
+  </ul>
+
+  <h2>Links</h2>
+  <ul class="links">
+    <li><a href="https://recruit-match.ncsasports.org/clientrms/athlete_profiles/17536185" target="_blank" rel="noopener">NCSA profile</a></li>
+    <li>NCAA ID: 2607120189</li>
+  </ul>
+
+  <footer>Juan Fernando Grajales Robledo · Cali, Colombia</footer>
+</main>
+
+<script>
+// Endpoint de Apps Script (Fase 3). Mientras esté vacío, los eventos solo salen en la consola.
+const ENDPOINT = "";
+
+(function () {
+  const params = new URLSearchParams(location.search);
+  const code = params.get("c");
+  // Sin código válido no se registra nada.
+  if (!code || !/^[A-Za-z0-9_-]{1,64}$/.test(code)) return;
+
+  const video = document.getElementById("v");
+  const sid = Array.from(crypto.getRandomValues(new Uint8Array(8)),
+                         b => b.toString(16).padStart(2, "0")).join("");
+  let maxPct = 0;
+  let timer = null;
+  let closed = false;
+
+  function pct() {
+    return video.duration ? Math.min(100, Math.round(video.currentTime / video.duration * 100)) : 0;
+  }
+
+  function send(event) {
+    const data = {
+      c: code,
+      sid: sid,
+      event: event,
+      t: Math.round(video.currentTime || 0),
+      dur: Math.round(video.duration || 0),
+      max_pct: maxPct,
+      ts: new Date().toISOString()
+    };
+    if (!ENDPOINT) { console.log("[tracking]", data); return; }
+    // text/plain evita la verificación CORS previa; Apps Script lo lee igual.
+    navigator.sendBeacon(ENDPOINT, new Blob([JSON.stringify(data)], { type: "text/plain" }));
+  }
+
+  video.addEventListener("timeupdate", () => { maxPct = Math.max(maxPct, pct()); });
+  video.addEventListener("play", () => {
+    send("play");
+    clearInterval(timer);
+    timer = setInterval(() => send("progress"), 10000);
+  });
+  video.addEventListener("pause", () => {
+    clearInterval(timer);
+    if (!video.ended) send("pause");
+  });
+  video.addEventListener("ended", () => { clearInterval(timer); maxPct = 100; send("ended"); });
+
+  // page_close: una sola vez por cierre. Al cerrar la pestaña el navegador dispara
+  // visibilitychange (hidden) y pagehide, a veces con un "visible" breve en medio;
+  // el candado y la ventana de 2 segundos evitan el duplicado.
+  let lastClose = 0;
+  function close() {
+    if (closed || Date.now() - lastClose < 2000) return;
+    closed = true;
+    lastClose = Date.now();
+    clearInterval(timer);
+    send("page_close");
+  }
+  addEventListener("pagehide", close);
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "hidden") close();
+    else {
+      closed = false; // volvió a la pestaña: un cierre posterior se registra otra vez
+      if (!video.paused && !video.ended) { clearInterval(timer); timer = setInterval(() => send("progress"), 10000); }
+    }
+  });
+
+  send("page_open");
+})();
+</script>
+</body>
+</html>
